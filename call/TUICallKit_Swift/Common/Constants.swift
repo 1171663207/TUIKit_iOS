@@ -105,6 +105,24 @@ class FrameworkConstants{
     static var language: Int = callLanguageSwift
 }
 
+// MARK: - Call Error Codes (migrated from TUICallDefine.h)
+/// You do not have TUICallKit package
+let ERROR_PACKAGE_NOT_PURCHASED: Int32 = -1001
+/// The package you purchased does not support this ability
+let ERROR_PACKAGE_NOT_SUPPORTED: Int32 = -1002
+/// Camera or microphone not authorized
+let ERROR_PERMISSION_DENIED: Int32 = -1101
+/// Not login, please call init() first
+let ERROR_INIT_FAIL: Int32 = -1201
+/// Params error
+let ERROR_PARAM_INVALID: Int32 = -1202
+/// Current status not support
+let ERROR_REQUEST_REFUSED: Int32 = -1203
+/// The current method is calling, do not call it repeatedly
+let ERROR_REQUEST_REPEATED: Int32 = -1204
+/// This function is not supported in the current call scene
+let ERROR_SCENE_NOT_SUPPORTED: Int32 = -1205
+
 // MARK: - IM Error Codes
 let IM_CODE_INVALID_PARAMETERS: Int32 = 6017
 

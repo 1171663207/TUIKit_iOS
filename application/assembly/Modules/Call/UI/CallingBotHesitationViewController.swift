@@ -7,7 +7,6 @@ import UIKit
 import AtomicX
 import Alamofire
 import TUICallKit_Swift
-import RTCRoomEngine
 import TUICore
 
 enum CallBotType: Int {

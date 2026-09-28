@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import RTCRoomEngine
 import TUICore
 import AtomicX
 import Combine
@@ -18,7 +17,7 @@ enum RecentCallsType: Int {
     case missed
 }
 
-public enum RecentCallsUIStyle: Int {
+enum RecentCallsUIStyle: Int {
     case classic
     case minimalist
 }

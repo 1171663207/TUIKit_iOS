@@ -6,7 +6,6 @@
 
 import UIKit
 import Combine
-import RTCRoomEngine
 #if canImport(TXLiteAVSDK_TRTC)
 import TXLiteAVSDK_TRTC
 #elseif canImport(TXLiteAVSDK_Professional)
@@ -45,7 +44,7 @@ class TEBeautyView: UIView {
 
     private var isAdvancedBeauty = false
     private lazy var trtcCloud: TRTCCloud = {
-        return TUICallEngine.createInstance().getTRTCCloudInstance()
+        return TRTCCloud.sharedInstance()
     }()
     private weak var beautyPanel: UIView?
 

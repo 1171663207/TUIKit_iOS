@@ -378,7 +378,7 @@ class LivePKViewController: UIViewController {
             .sink { [weak self] event in
                 switch event {
                 case .onReceiveGift(_, let gift, let count, let sender):
-                    self?.giftAnimationView.playGiftAnimation(gift: gift, count: count, sender: sender)
+                    self?.giftAnimationView.playGiftAnimation(gift: gift, count: UInt8(count), sender: sender)
                 @unknown default:
                     break
                 }

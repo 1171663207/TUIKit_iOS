@@ -107,7 +107,7 @@ class BarrageView: UIView {
             .sink { [weak self] event in
                 switch event {
                 case .onReceiveGift(_, let gift, let count, let sender):
-                    self?.insertGiftBarrage(gift: gift, count: count, sender: sender)
+                    self?.insertGiftBarrage(gift: gift, count: UInt8(count), sender: sender)
                 @unknown default:
                     break
                 }

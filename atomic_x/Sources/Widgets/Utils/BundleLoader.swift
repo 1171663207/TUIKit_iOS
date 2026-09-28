@@ -42,9 +42,7 @@ public class BundleLoader {
     
     
     private static let placeholders = ["xxx", "yyy", "zzz", "mmm", "nnn"]
-    /// 字段未覆盖时，走内置兜底
-    private static let notFoundValue = "com.atomicx.localized.key.notfound"
-    /// 统一的国际化核心方法，支持主 bundle 同名表覆盖文案
+    /// 统一的国际化核心方法
         /// - Parameters:
         ///   - key: Localizable.strings 中的 Key
         ///   - bundle: 所在模块的 Bundle
@@ -56,39 +54,24 @@ public class BundleLoader {
                                        in bundle: Bundle,
                                        tableName: String,
                                        arguments: [CVarArg] = []) -> String {
-        let localizedString = mainBundleOverride(key: key, tableName: tableName)
-            ?? sdkBundleLocalized(key: key, in: bundle, tableName: tableName)
-
+        var localizedString = ""
+        
+        if let path = bundle.path(forResource: getPreferredLanguage(), ofType: "lproj"),
+           let langBundle = Bundle(path: path) {
+            localizedString = langBundle.localizedString(forKey: key, value: nil, table: tableName)
+        } else {
+            localizedString = bundle.localizedString(forKey: key, value: nil, table: tableName)
+        }
+        
         if arguments.isEmpty {
             return localizedString
         }
-
+        
         if localizedString.contains("xxx") {
             return applyReplacement(origin: localizedString, args: arguments)
         } else {
             return String(format: localizedString, arguments: arguments)
         }
-    }
-
-    private static func mainBundleOverride(key: String, tableName: String) -> String? {
-        let mainBundle = Bundle.main
-        if let path = mainBundle.path(forResource: getPreferredLanguage(), ofType: "lproj"),
-           let langBundle = Bundle(path: path) {
-            let value = langBundle.localizedString(forKey: key, value: notFoundValue, table: tableName)
-            if value != notFoundValue && !value.isEmpty {
-                return value
-            }
-        }
-        let value = mainBundle.localizedString(forKey: key, value: notFoundValue, table: tableName)
-        return (value != notFoundValue && !value.isEmpty) ? value : nil
-    }
-
-    private static func sdkBundleLocalized(key: String, in bundle: Bundle, tableName: String) -> String {
-        if let path = bundle.path(forResource: getPreferredLanguage(), ofType: "lproj"),
-           let langBundle = Bundle(path: path) {
-            return langBundle.localizedString(forKey: key, value: nil, table: tableName)
-        }
-        return bundle.localizedString(forKey: key, value: nil, table: tableName)
     }
     
     private static func applyReplacement(origin: String, args: [CVarArg]) -> String {

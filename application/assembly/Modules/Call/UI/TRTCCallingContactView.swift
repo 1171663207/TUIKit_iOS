@@ -7,7 +7,6 @@ import UIKit
 import Foundation
 import Toast_Swift
 import TUICallKit_Swift
-import RTCRoomEngine
 import ImSDK_Plus
 import TUICore
 import AtomicXCore

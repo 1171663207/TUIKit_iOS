@@ -7,7 +7,6 @@
 
 import AVFoundation
 import AtomicXCore
-import RTCRoomEngine
 
 enum AuthorizationDeniedType: Int {
     case audio

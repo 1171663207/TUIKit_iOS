@@ -4,15 +4,13 @@
 //
 
 import UIKit
-import AtomicX
-import SnapKit
 
 class SettingsCustomSwitchView: UIView  {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = ThemeStore.shared.typographyTokens.Regular16
-        label.textColor = ThemeStore.shared.colorTokens.textColorPrimary
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = .black
         return label
     }()
     
@@ -25,7 +23,7 @@ class SettingsCustomSwitchView: UIView  {
     
     init(title: String, isOn: Bool) {
         super.init(frame: .zero)
-        backgroundColor = ThemeStore.shared.colorTokens.bgColorOperate
+        backgroundColor = .white
         titleLabel.text = title
         switchControl.isOn = isOn
         switchControl.addTarget(self, action: #selector(switchChanged), for: .valueChanged)

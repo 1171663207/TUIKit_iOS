@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import RTCRoomEngine
 import SDWebImage
 import ImSDK_Plus
 import Combine
@@ -181,7 +180,7 @@ class PictureInPictureFeature: NSObject {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         if let data = try? encoder.encode(request), let jsonString = String(data: data, encoding: .utf8) {
-            TUICallEngine.createInstance().callExperimentalAPI(jsonObject: jsonString)
+            CallStore.shared.callExperimentalAPI(jsonStr: jsonString)
         }
     }
 }

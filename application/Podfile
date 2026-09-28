@@ -12,7 +12,7 @@ def shared_pods
   pod 'Alamofire', '5.0.0'
   pod 'SnapKit', '5.0.1'
   pod 'Kingfisher', '6.3.1'
-  pod 'AtomicXCore', '4.3.0'
+  pod 'AtomicXCore-Preview'
   pod 'Toast-Swift'
 
   # ── Shell project local pods ──
@@ -27,9 +27,9 @@ def shared_pods
 
   pod 'AtomicX', :path => '../atomic_x/AtomicX.podspec'
   pod 'TUICallKit_Swift/Professional', :path => '../call/'
-  pod 'TUILiveKit', :path => '../live/TUILiveKit.podspec'
-  pod 'TUIRoomKit', :path => '../room/TUIRoomKit.podspec'
-  pod 'TUIChatKit', :path => '../chat/uikit/TUIChatKit.podspec'
+#  pod 'TUILiveKit', :path => '../live/TUILiveKit.podspec'
+#  pod 'TUIRoomKit', :path => '../room/TUIRoomKit.podspec'
+#  pod 'TUIChatKit', :path => '../chat/uikit/TUIChatKit.podspec'
 
 end
 
@@ -46,7 +46,7 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
       config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
     end
   end

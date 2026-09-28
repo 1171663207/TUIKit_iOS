@@ -250,7 +250,7 @@ class InteractiveViewController: UIViewController {
                 switch event {
                 case .onReceiveGift(_, let gift, let count, let sender):
                     // Play a gift animation (full-screen SVGA or barrage slide animation)
-                    self?.giftAnimationView.playGiftAnimation(gift: gift, count: count, sender: sender)
+                    self?.giftAnimationView.playGiftAnimation(gift: gift, count: UInt8(count), sender: sender)
                 @unknown default:
                     break
                 }

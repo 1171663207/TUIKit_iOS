@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import RTCRoomEngine
 import AtomicX
 import Combine
 import AtomicXCore

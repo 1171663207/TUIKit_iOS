@@ -145,7 +145,7 @@ class GiftPanelView: UIView {
             .sink { [weak self] event in
                 switch event {
                 case .onReceiveGift(_, let gift, let count, let sender):
-                    self?.onReceiveGift?(gift, count, sender)
+                    self?.onReceiveGift?(gift, UInt8(count), sender)
                 @unknown default:
                     break
                 }

@@ -10,7 +10,6 @@ import AtomicX
 import SnapKit
 import AtomicXCore
 import Combine
-import RTCRoomEngine
 import SDWebImage
 
 public enum Feature: String {
@@ -58,7 +57,6 @@ public class CallView: UIView {
     private let timerView = TimerView(frame: .zero)
     private let hintView = HintView(frame: .zero)
     private let callCoreView = CallCoreView(frame: .zero)
-    private let aiSubtitle = AISubtitle(frame: .zero)
     private let callTranscriberView = CallTranscriberView(frame: .zero)
     private let waitingParticipantsView = WaitingParticipantsView(frame: .zero)
     private let singleCallControlsView = SingleCallControlsView(frame: .zero)
@@ -102,13 +100,11 @@ extension CallView {
         addSubview(backgroundBlurView)
         addSubview(callCoreView)
         addSubview(waitingParticipantsView)
+        addSubview(singleCallControlsView)
         addSubview(multiCallControlsView)
-        addSubview(aiSubtitle)
         addSubview(callTranscriberView)
         addSubview(timerView)
         addSubview(hintView)
-
-        callCoreView.callViewAdapter = self
     }
     
     private func activateConstraints() {
@@ -138,6 +134,11 @@ extension CallView {
             make.centerY.equalToSuperview()
         }
         
+        singleCallControlsView.snp.remakeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.height.equalTo(260.scale375Height())
+        }
+        
         multiCallControlsView.snp.remakeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
             make.height.equalTo(260.scale375Height())
@@ -145,14 +146,6 @@ extension CallView {
         
         let activeCall = CallStore.shared.state.value.activeCall
         let isSingleAudioCall = !isGroupCall && activeCall.mediaType == .audio
-        let aiSubtitleBottomOffset = isSingleAudioCall ? -144.scale375Height() : -270.scale375Height()
-        
-        aiSubtitle.snp.remakeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.height.equalTo(200.scale375Height())
-            make.width.equalToSuperview().multipliedBy(0.95)
-            make.bottom.equalToSuperview().offset(aiSubtitleBottomOffset)
-        }
         
         let singleCallControlsHeight: CGFloat = isSingleAudioCall ? 144.scale375Height() : 260.scale375Height()
         let controlsHeight = isGroupCall ? multiCallControlsHeight : singleCallControlsHeight
@@ -402,37 +395,5 @@ extension CallView: MultiCallControlsViewDelegate {
         }
         
         updateTranscriberViewConstraints()
-    }
-}
-
-// MARK: - CallViewAdapter
-extension CallView: CallViewAdapter {
-    public func onCreateOverlayView(layout: CallLayoutTemplate) -> UIView? {
-        guard layout == .float else { return nil }
-
-        let container = OverlayContainerView()
-        container.backgroundColor = .clear
-        container.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
-        singleCallControlsView.removeFromSuperview()
-        container.addSubview(singleCallControlsView)
-
-        let isSingleAudioCall = CallStore.shared.state.value.activeCall.mediaType == .audio
-        let controlsHeight: CGFloat = isSingleAudioCall ? 144.scale375Height() : 260.scale375Height()
-
-        singleCallControlsView.snp.remakeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview()
-            make.height.equalTo(controlsHeight)
-        }
-
-        return container
-    }
-}
-
-private final class OverlayContainerView: UIView {
-    override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        guard let superview = superview else { return }
-        frame = superview.bounds
     }
 }

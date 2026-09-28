@@ -11,7 +11,6 @@ import AtomicX
 import AtomicXCore
 import Combine
 import SnapKit
-import RTCRoomEngine
 
 private let TUICore_TEBeautyService = "TUICore_TEBeautyService"
 

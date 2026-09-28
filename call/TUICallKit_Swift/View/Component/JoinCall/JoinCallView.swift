@@ -7,7 +7,6 @@
 
 import UIKit
 import TUICore
-import RTCRoomEngine
 import AtomicXCore
 
 let kJoinGroupCallViewDefaultHeight: CGFloat = 52.0

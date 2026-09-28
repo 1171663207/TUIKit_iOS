@@ -5,7 +5,6 @@
 //  Created by vincepzhang on 2025/4/22.
 //
 
-import RTCRoomEngine
 import SnapKit
 import AtomicXCore
 
@@ -40,7 +39,7 @@ class AISubtitle: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
-        TUICallEngine.createInstance().getTRTCCloudInstance().addDelegate(self)
+        TRTCCloud.sharedInstance().addDelegate(self)
     }
     
     required init?(coder: NSCoder) {
@@ -49,6 +48,7 @@ class AISubtitle: UIView {
     
     deinit {
         hideTimer?.invalidate()
+        TRTCCloud.sharedInstance().removeDelegate(self)
     }
     
     private func setupUI() {

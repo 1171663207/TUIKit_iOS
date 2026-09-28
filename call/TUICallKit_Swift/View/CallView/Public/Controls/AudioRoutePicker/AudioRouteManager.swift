@@ -6,8 +6,13 @@
 //
 
 import AVFAudio
-import RTCRoomEngine
 import AtomicXCore
+
+#if canImport(TXLiteAVSDK_TRTC)
+import TXLiteAVSDK_TRTC
+#elseif canImport(TXLiteAVSDK_Professional)
+import TXLiteAVSDK_Professional
+#endif
 
 public class AudioRouteManager {
     static private var isEnableiOSAvroutePickerViewMode = false
@@ -106,7 +111,7 @@ public class AudioRouteManager {
             let currentRoute = deviceStore.state.value.currentAudioRoute
             deviceStore.setAudioRoute(currentRoute)
         }
-        TUICallEngine.createInstance().getTRTCCloudInstance().callExperimentalAPI(paramsString)
+        TRTCCloud.sharedInstance().callExperimentalAPI(paramsString)
     }
     
     public static func getIsEnableiOSAvroutePickerViewMode() -> Bool {

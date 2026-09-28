@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -55,7 +55,7 @@
 		BA17F9E7660E76B42E8A11CA /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CD88079863C715D38BF1DE24 /* BeautySettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeautySettingView.swift; sourceTree = "<group>"; };
 		CEA7E05D51AAA440C445FB2C /* InteractiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveViewController.swift; sourceTree = "<group>"; };
-		CEA8408670E833DB3776007B /* AtomicXCoreExample.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = AtomicXCoreExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEA8408670E833DB3776007B /* AtomicXCoreExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AtomicXCoreExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7C7B5CB743B6574A3EBB39B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D804A97B51144FD80A80CE23 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E17302DE95D774BD02785702 /* GiftPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftPanelView.swift; sourceTree = "<group>"; };
@@ -169,7 +169,6 @@
 				E4755089D98EF8CA564B0BD1 /* Pods-AtomicXCoreExample.debug.xcconfig */,
 				6A813894589134A742E8A27B /* Pods-AtomicXCoreExample.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -276,7 +275,6 @@
 			);
 			mainGroup = 33B27850CD713E2A078E76B2;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
 			productRefGroup = 2BEB60151541B8539C6F55B0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -308,9 +306,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AtomicXCoreExample/Pods-AtomicXCoreExample-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AtomicXCoreExample/Pods-AtomicXCoreExample-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -325,9 +327,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AtomicXCoreExample/Pods-AtomicXCoreExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AtomicXCoreExample/Pods-AtomicXCoreExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

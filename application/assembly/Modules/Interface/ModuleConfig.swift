@@ -3,7 +3,6 @@
 //  AppAssembly
 //
 
-import TUILiveKit
 import UIKit
 
 public struct ModuleConfig {

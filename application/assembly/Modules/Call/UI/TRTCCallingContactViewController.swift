@@ -5,7 +5,6 @@
 
 import Foundation
 import TUICallKit_Swift
-import RTCRoomEngine
 import UIKit
 import TUICore
 import AtomicXCore

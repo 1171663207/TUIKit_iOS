@@ -5,7 +5,6 @@
 //  Created by vincepzhang on 2025/6/3.
 //
 
-import RTCRoomEngine
 import AtomicXCore
 
 #if canImport(TXLiteAVSDK_TRTC)
@@ -21,11 +20,11 @@ class TRTCAudioRouteObserver: NSObject, TRTCCloudDelegate {
     
     override init() {
         super.init()
-        TUICallEngine.createInstance().getTRTCCloudInstance().addDelegate(self)
+        TRTCCloud.sharedInstance().addDelegate(self)
     }
     
     deinit {
-        TUICallEngine.createInstance().getTRTCCloudInstance().removeDelegate(self)
+        TRTCCloud.sharedInstance().removeDelegate(self)
     }
     
     func onAudioRouteChanged(_ route: TRTCAudioRoute, from fromRoute: TRTCAudioRoute) {

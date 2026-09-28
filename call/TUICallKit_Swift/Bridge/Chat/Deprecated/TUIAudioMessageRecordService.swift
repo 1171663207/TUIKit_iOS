@@ -8,7 +8,7 @@
 import Foundation
 import AVFAudio
 import TUICore
-import RTCRoomEngine
+import Combine
 import AtomicXCore
 
 #if canImport(TXLiteAVSDK_TRTC)
@@ -23,7 +23,7 @@ class TUIAudioRecordInfo {
     var signature: String = ""
 }
 
-class TUIAudioMessageRecordService: NSObject, TUIServiceProtocol, TUINotificationProtocol, TRTCCloudDelegate,  TUICallObserver {
+class TUIAudioMessageRecordService: NSObject, TUIServiceProtocol, TUINotificationProtocol, TRTCCloudDelegate {
     
     static let instance = TUIAudioMessageRecordService()
     
@@ -32,6 +32,7 @@ class TUIAudioMessageRecordService: NSObject, TUIServiceProtocol, TUINotificatio
     var categoryOptions: AVAudioSession.CategoryOptions?
     
     var callback: TUICallServiceResultCallback?
+    private var cancellables = Set<AnyCancellable>()
     
     override init() {
         super.init()
@@ -41,11 +42,24 @@ class TUIAudioMessageRecordService: NSObject, TUIServiceProtocol, TUINotificatio
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+        cancellables.forEach { $0.cancel() }
     }
     
     @objc
     func loginSuccessNotification() {
-        TUICallEngine.createInstance().addObserver(self)
+        subscribeCallEvent()
+    }
+    
+    private func subscribeCallEvent() {
+        CallStore.shared.callEventPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] event in
+                guard let self = self else { return }
+                if case .onCallReceived = event {
+                    self.stopRecordAudioMessage()
+                }
+            }
+            .store(in: &cancellables)
     }
 }
 
@@ -162,13 +176,6 @@ extension TUIAudioMessageRecordService {
         audioRecordInfo = nil
         
         let _  = abandonAudioFocus()
-    }
-}
-
-// MARK: TUICallObserver
-extension TUIAudioMessageRecordService {
-    func onCallReceived(_ callId: String, callerId: String, calleeIdList: [String], mediaType: TUICallMediaType, info: TUICallObserverExtraInfo) {
-        stopRecordAudioMessage()
     }
 }
 

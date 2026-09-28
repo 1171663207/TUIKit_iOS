@@ -7,7 +7,6 @@
 
 import UIKit
 import AtomicX
-import RTCRoomEngine
 import AtomicXCore
 import Combine
 import SnapKit
@@ -373,16 +372,11 @@ extension SingleCallControlsView {
         updateVirtualBackgroundButton(isOpened: isBlurBackgroundEnabled, isSmallIcon: isInCall)
 
         let level = isBlurBackgroundEnabled ? 3 : 0
-        TUICallEngine.createInstance().setBlurBackground(level) { [weak self] code, message in
-            if code != 0 {
-                Logger.error("Set blur background failed: \(code) \(message ?? "")")
-                DispatchQueue.main.async {
-                    guard let self = self else { return }
-                    self.isBlurBackgroundEnabled = !self.isBlurBackgroundEnabled
-                    let isInCall = CallStore.shared.state.value.selfInfo.status == .accept
-                    self.updateVirtualBackgroundButton(isOpened: self.isBlurBackgroundEnabled, isSmallIcon: isInCall)
-                }
-            }
+        let jsonParams: [String: Any] = ["api": "setBlurBackground",
+                                         "params": ["level": level]]
+        if let data = try? JSONSerialization.data(withJSONObject: jsonParams),
+           let jsonStr = String(data: data, encoding: .utf8) {
+            CallStore.shared.callExperimentalAPI(jsonStr: jsonStr)
         }
     }
     

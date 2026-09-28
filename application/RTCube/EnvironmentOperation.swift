@@ -6,7 +6,6 @@
 //
 
 import ImSDK_Plus
-import RTCRoomEngine
 import TXLiteAVSDK_Professional
 
 enum EnvironmentOperation {
@@ -16,18 +15,6 @@ enum EnvironmentOperation {
     }
 
     private static func switchIMEnvironment(enableTest: Bool) {
-        var jsonObject = [String: Any]()
-        jsonObject["api"] = "setTestEnvironment"
-        var params = [String: Any]()
-        params["enableRoomTestEnv"] = enableTest
-        jsonObject["params"] = params
-
-        if let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: []),
-           let jsonString = String(data: jsonData, encoding: .utf8)
-        {
-            TUIRoomEngine.sharedInstance().callExperimentalAPI(jsonStr: jsonString) { _ in }
-        }
-
         V2TIMManager.sharedInstance().callExperimentalAPI(
             api: "setTestEnvironment",
             param: NSNumber(value: enableTest)

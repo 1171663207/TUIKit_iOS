@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RTCRoomEngine
 import ImSDK_Plus
 import TUICore
 import Combine
@@ -23,7 +22,6 @@ class JoinCallViewManager: NSObject, V2TIMGroupListener, JoinCallViewDelegate {
     // MARK: Private
     private var cancellables = Set<AnyCancellable>()
     private var joinGroupCallView = JoinCallView()
-    private var roomId = TUIRoomId()
     private var groupId: String = ""
     private var callId: String = ""
     private var callMediaType: CallMediaType? = nil
@@ -69,7 +67,6 @@ class JoinCallViewManager: NSObject, V2TIMGroupListener, JoinCallViewDelegate {
             return
         }
         
-        handleRoomId(groupAttributeDic)
         handleCallMediaType(groupAttributeDic)
         handleCallId(groupAttributeDic)
         
@@ -94,19 +91,6 @@ class JoinCallViewManager: NSObject, V2TIMGroupListener, JoinCallViewDelegate {
         return businessType == "callkit"
     }
     
-    private func handleRoomId(_ groupAttributeValue: [String: Any]) {
-        guard let strRoomId = groupAttributeValue["room_id"] as? String, !strRoomId.isEmpty else {
-            return
-        }
-        
-        if groupAttributeValue["room_id_type"] as? Int == 2 {
-            roomId.strRoomId = strRoomId
-        } else if let intRoomId = UInt32(strRoomId) {
-            roomId.intRoomId = intRoomId
-        } else {
-            roomId.strRoomId = strRoomId
-        }
-    }
     
     private func handleCallMediaType(_ groupAttributeValue: [String: Any]) {
         guard let callMediaTypeStr = groupAttributeValue["call_media_type"] as? String, !callMediaTypeStr.isEmpty else {

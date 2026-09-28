@@ -4,7 +4,6 @@
 //
 
 import UIKit
-import AtomicX
 
 protocol SwiftDropMenuControlContentAppearAble: SwiftDropMenuControlDelegate {
     func on(appear element: SwiftDropMenuControl.AppearElement, forDropMenu menu: SwiftDropMenuControl)
@@ -327,7 +326,7 @@ extension SwiftDropMenuListView: UICollectionViewDataSource {
         }
         else {
             cell.contentView.layer.borderColor = UIColor(red: 221/255.0, green: 221/255.0, blue: 221/255.0, alpha: 1.0).cgColor
-            cell.contentView.backgroundColor = ThemeStore.shared.colorTokens.bgColorOperate
+            cell.contentView.backgroundColor = .white
             cell.titleLabel.textColor = UIColor(red: 111/255.0, green: 111/255.0, blue: 112/255.0, alpha: 1.0)
         }
         cell.titleLabel.text = title
@@ -478,7 +477,7 @@ private class SwiftDropMenuDefaultCell: UICollectionViewCell {
     let titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.textAlignment = .center
-        titleLabel.font = ThemeStore.shared.typographyTokens.Regular12
+        titleLabel.font = UIFont.systemFont(ofSize: 12.0)
         return titleLabel
     }()
     
@@ -510,8 +509,9 @@ private class SwiftDropMenuDefaultCell: UICollectionViewCell {
                                                                       views: ["titleLabel": self.titleLabel]))
         NSLayoutConstraint.activate(constraints)
         
+        
         self.contentView.layer.borderColor = UIColor(red: 221/255.0, green: 221/255.0, blue: 221/255.0, alpha: 1.0).cgColor
-        self.contentView.backgroundColor = ThemeStore.shared.colorTokens.bgColorOperate
+        self.contentView.backgroundColor = .white
         self.titleLabel.textColor = UIColor(red: 111/255.0, green: 111/255.0, blue: 112/255.0, alpha: 1.0)
         
         self.contentView.clipsToBounds = true

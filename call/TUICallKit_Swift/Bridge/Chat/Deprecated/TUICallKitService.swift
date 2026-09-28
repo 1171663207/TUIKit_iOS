@@ -56,16 +56,8 @@ extension TUICallKitService {
             let groupId = param[TUICore_TUICallingService_ShowCallingViewMethod_GroupIDKey] as? String ?? ""
             startCall(groupID: groupId, userIDs: userIDs, callingType: mediaType)
         } else if method == TUICore_TUICallingService_ReceivePushCallingMethod {
-            guard let signalingInfo = param[TUICore_TUICallingService_ShowCallingViewMethod_SignalingInfo] as? V2TIMSignalingInfo else {
-                return nil
-            }
-            if let cls = NSClassFromString("TUICallEngine") as? NSObject.Type {
-                let engine = cls.perform(NSSelectorFromString("createInstance")).takeUnretainedValue()
-                let selector = NSSelectorFromString("onReceiveGroupCallAPNs:")
-                if engine.responds(to: selector) {
-                    engine.perform(selector, with: signalingInfo)
-                }
-            }
+            // Deprecated: TUICallEngine.onReceiveGroupCallAPNs has been removed.
+            // Offline push signaling is now handled by AtomicEngine internally.
         } else if method == TUICore_TUICallingService_EnableMultiDeviceAbilityMethod {
             let key = TUICore_TUICallingService_EnableMultiDeviceAbilityMethod_EnableMultiDeviceAbility
             guard let enableMultiDeviceAbility = param[key] as? Bool else {

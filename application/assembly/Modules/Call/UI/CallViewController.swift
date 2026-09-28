@@ -1,13 +1,13 @@
 //
 //  CallViewController.swift
-//  AppAssembly
+//  App-UIKit
+//
+//  Created by yukiwwwang on 2025/8/8.
 //
 
 import Foundation
 import UIKit
-import SnapKit
 import AtomicXCore
-import AtomicX
 
 #if canImport(TUICallKit_Swift)
 import TUICallKit_Swift
@@ -20,18 +20,18 @@ class CallViewController: UIViewController, UITextFieldDelegate {
     
     private let line1View: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = ThemeStore.shared.colorTokens.strokeColorSecondary
+        view.backgroundColor = UIColor("EEEEEE")
         return view
     }()
     private let groupIdContentView: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = ThemeStore.shared.colorTokens.bgColorOperate
+        view.backgroundColor = UIColor.white
         view.isHidden = true
         return view
     }()
     private let groupIdTextLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = ThemeStore.shared.typographyTokens.Regular16
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = UIColor.black
         label.text = CallingLocalize("assembly_call_settings_group_id")
         return label
@@ -39,8 +39,8 @@ class CallViewController: UIViewController, UITextFieldDelegate {
     private let groupIdTextField: UITextField = {
         let textField = UITextField(frame: .zero)
         textField.backgroundColor = UIColor.clear
-        textField.font = ThemeStore.shared.typographyTokens.Regular16
-        textField.textColor = ThemeStore.shared.colorTokens.textColorPrimary
+        textField.font = UIFont(name: "PingFangSC-Regular", size: 16)
+        textField.textColor = UIColor("333333")
         textField.attributedPlaceholder = NSAttributedString(string: CallingLocalize("assembly_call_settings_input_group_id"))
         textField.textAlignment = .right
         textField.keyboardType = .asciiCapable
@@ -48,12 +48,12 @@ class CallViewController: UIViewController, UITextFieldDelegate {
     }()
     private let userIdContentView: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = ThemeStore.shared.colorTokens.bgColorOperate
+        view.backgroundColor = UIColor.white
         return view
     }()
     private let userIdTextLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = ThemeStore.shared.typographyTokens.Regular16
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = UIColor.black
         label.text = CallingLocalize("assembly_call_settings_user_id")
         return label
@@ -61,8 +61,8 @@ class CallViewController: UIViewController, UITextFieldDelegate {
     private let calledUserIdTextField: UITextField = {
         let textField = UITextField(frame: .zero)
         textField.backgroundColor = UIColor.clear
-        textField.font = ThemeStore.shared.typographyTokens.Regular16
-        textField.textColor = ThemeStore.shared.colorTokens.textColorPrimary
+        textField.font = UIFont(name: "PingFangSC-Regular", size: 16)
+        textField.textColor = UIColor("333333")
         textField.attributedPlaceholder = NSAttributedString(string: CallingLocalize("assembly_call_settings_input_user_ids"))
         textField.textAlignment = .right
         textField.keyboardType = .asciiCapable
@@ -73,17 +73,17 @@ class CallViewController: UIViewController, UITextFieldDelegate {
     
     private let line2View: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = ThemeStore.shared.colorTokens.strokeColorSecondary
+        view.backgroundColor = UIColor("EEEEEE")
         return view
     }()
     private let mediaTypeContentView: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = ThemeStore.shared.colorTokens.bgColorOperate
+        view.backgroundColor = UIColor.white
         return view
     }()
     private let typeLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = ThemeStore.shared.typographyTokens.Regular16
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = UIColor.black
         label.text = CallingLocalize("assembly_call_settings_media_type")
         return label
@@ -107,7 +107,7 @@ class CallViewController: UIViewController, UITextFieldDelegate {
     }()
     private let callSettingsLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = ThemeStore.shared.typographyTokens.Regular16
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = UIColor.blue
         label.text = "\(CallingLocalize("assembly_call_settings_title"))  >"
         label.isUserInteractionEnabled = true
@@ -116,7 +116,7 @@ class CallViewController: UIViewController, UITextFieldDelegate {
     
     private let optionalParamLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = ThemeStore.shared.typographyTokens.Regular16
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = UIColor.blue
         label.text = "\(CallingLocalize("assembly_call_settings_optional_parameters"))  >"
         label.isUserInteractionEnabled = true
@@ -125,7 +125,7 @@ class CallViewController: UIViewController, UITextFieldDelegate {
     
     private let joinInGroupLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = ThemeStore.shared.typographyTokens.Regular16
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = UIColor.blue
         label.text = CallingLocalize("assembly_call_settings_join_group_call")
         label.isUserInteractionEnabled = true
@@ -136,9 +136,9 @@ class CallViewController: UIViewController, UITextFieldDelegate {
         btn.setTitleColor(.white, for: .normal)
         btn.setTitle(CallingLocalize("assembly_call_btn_app_call"), for: .normal)
         btn.adjustsImageWhenHighlighted = false
-        btn.setBackgroundImage(ThemeStore.shared.colorTokens.buttonColorPrimaryDefault.trans2Image(), for: .normal)
-        btn.titleLabel?.font = ThemeStore.shared.typographyTokens.Medium20
-        btn.layer.shadowColor = ThemeStore.shared.colorTokens.buttonColorPrimaryDefault.cgColor
+        btn.setBackgroundImage(UIColor("006EFF").trans2Image(), for: .normal)
+        btn.titleLabel?.font = UIFont(name: "PingFangSC-Medium", size: 20)
+        btn.layer.shadowColor = UIColor("006EFF").cgColor
         btn.layer.shadowOffset = CGSize(width: 0, height: 6)
         btn.layer.shadowRadius = 16
         btn.layer.shadowOpacity = 0.4
@@ -155,8 +155,7 @@ class CallViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = CallingLocalize("assembly_call_card_title")
-        view.backgroundColor = ThemeStore.shared.colorTokens.bgColorOperate
+        view.backgroundColor = UIColor.white
         setupNavigationBar()
         constructViewHierarchy()
         activateConstraints()
@@ -344,7 +343,6 @@ class CallViewController: UIViewController, UITextFieldDelegate {
         if !groupId.isEmpty {
             params.chatGroupId = groupId
         }
-        
         TUICallKit.createInstance().calls(userIdList: userIds, mediaType: callType, params: params, completion: nil)
     }
     

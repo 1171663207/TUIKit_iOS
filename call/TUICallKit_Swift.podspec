@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   
   spec.dependency 'TUICore'
   spec.dependency 'AtomicX'
-  spec.dependency 'AtomicXCore'
+  spec.dependency 'AtomicXCore-Preview'
   spec.dependency 'SnapKit'
   spec.dependency 'SDWebImage'
 
@@ -32,7 +32,6 @@ Pod::Spec.new do |spec|
   
   spec.subspec 'TRTC' do |trtc|
     trtc.dependency 'TXLiteAVSDK_TRTC'
-    trtc.dependency 'RTCRoomEngine/TRTC'
     trtc.source_files = 'TUICallKit_Swift/**/*.{h,m,mm,swift}'
     trtc.resource_bundles = {
       'TUICallKitBundle' => ['TUICallKit_Swift/Resources/**/*.xcstrings', 'TUICallKit_Swift/Resources/AudioFile', 'TUICallKit_Swift/Resources/*.xcassets', 'TUICallKit_Swift/Resources/*.gif']
@@ -42,7 +41,6 @@ Pod::Spec.new do |spec|
   
   spec.subspec 'Professional' do |professional|
     professional.dependency 'TXLiteAVSDK_Professional'
-    professional.dependency 'RTCRoomEngine/Professional'
     professional.source_files = 'TUICallKit_Swift/**/*.{h,m,mm,swift}'
     professional.resource_bundles = {
       'TUICallKitBundle' => ['TUICallKit_Swift/Resources/**/*.xcstrings', 'TUICallKit_Swift/Resources/AudioFile', 'TUICallKit_Swift/Resources/*.xcassets', 'TUICallKit_Swift/Resources/*.gif']

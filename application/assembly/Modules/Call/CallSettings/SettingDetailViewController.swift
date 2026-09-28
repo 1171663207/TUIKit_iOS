@@ -5,11 +5,8 @@
 
 import Foundation
 import UIKit
-import AtomicX
 import TUICore
-import RTCRoomEngine
-import SnapKit
-import Toast_Swift
+import AtomicX
 
 #if canImport(TUICallKit_Swift)
 import TUICallKit_Swift
@@ -21,7 +18,6 @@ class SettingDetailViewController: UIViewController, UITextViewDelegate {
     enum DetailType{
         case ringInfo
         case entendInfo
-        case offlinePushInfo
     }
     private var detail: DetailType
     
@@ -37,8 +33,8 @@ class SettingDetailViewController: UIViewController, UITextViewDelegate {
     private let textView: UITextView = {
         let view = UITextView(frame: .zero)
         view.backgroundColor = UIColor.clear
-        view.font = ThemeStore.shared.typographyTokens.Regular16
-        view.textColor = ThemeStore.shared.colorTokens.textColorPrimary
+        view.font = UIFont(name: "PingFangSC-Regular", size: 16)
+        view.textColor = UIColor("333333")
         view.textAlignment = .left
         view.isScrollEnabled = true
         return view
@@ -59,7 +55,7 @@ class SettingDetailViewController: UIViewController, UITextViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = ThemeStore.shared.colorTokens.bgColorOperate
+        view.backgroundColor = .white
         setupNavigationBar()
         constructViewHierarchy()
         activateConstraints()
@@ -99,8 +95,6 @@ class SettingDetailViewController: UIViewController, UITextViewDelegate {
             textView.text = CallingLocalize("assembly_call_settings_set_ring_tip")
         case .entendInfo:
             textView.text = CallingLocalize("assembly_call_settings_set_extend_tip")
-        case .offlinePushInfo:
-            textView.text = CallingLocalize("assembly_call_settings_set_offline_info_tip")
         }
     }
     
@@ -115,18 +109,16 @@ class SettingDetailViewController: UIViewController, UITextViewDelegate {
             ringSetting(text: textString)
         case .entendInfo:
             entendInfoSetting(text: textString)
-        case .offlinePushInfo:
-            offlinePushInfoSetting(text: textString)
         }
     }
-    
+        
     private func ringSetting(text: String) {
         if text.isEmpty {
             return
         }
         TUICallKit.createInstance().setCallingBell(filePath: text)
         SettingsConfig.share.ringUrl = text
-        view.makeToast("Set Successful: \(SettingsConfig.share.ringUrl)")
+        view.showAtomicToast(text: "Set Successful: \(SettingsConfig.share.ringUrl)")
     }
     
     private func entendInfoSetting(text: String) {
@@ -134,66 +126,6 @@ class SettingDetailViewController: UIViewController, UITextViewDelegate {
             return
         }
         SettingsConfig.share.userData = text
-        view.makeToast("Set Successful: \(text)")
+        view.showAtomicToast(text: "Set Successful: \(text)")
     }
-    
-    private func offlinePushInfoSetting(text: String) {
-        if text.isEmpty {
-            return
-        }
-        setOfflineData(jsonStr: text)
-        view.makeToast("Set Successful: \(SettingsConfig.share.pushInfo)")
-    }
-    
-    private func setOfflineData(jsonStr: String) {
-        guard let jsonData = jsonStr.data(using: String.Encoding.utf8) else { return }
-        let json = try? JSONSerialization.jsonObject(with: jsonData)
-        if let jsonDic = json as? [String : Any] {
-            
-            if let value = jsonDic["title"] as? String {
-                SettingsConfig.share.pushInfo.title = value
-            }
-            
-            if let value = jsonDic["desc"] as? String {
-                SettingsConfig.share.pushInfo.desc = value
-            }
-            
-            if let value = jsonDic["iOSPushType"] as? Int {
-                SettingsConfig.share.pushInfo.iOSPushType = value == 0 ? .apns : .voIP
-            }
-            
-            if let value = jsonDic["ignoreIOSBadge"] as? Bool {
-                SettingsConfig.share.pushInfo.ignoreIOSBadge = value
-            }
-            
-            if let value = jsonDic["iOSSound"] as? String {
-                SettingsConfig.share.pushInfo.iOSSound = value
-            }
-            
-            if let value = jsonDic["androidSound"] as? String {
-                SettingsConfig.share.pushInfo.androidSound = value
-            }
-            
-            if let value = jsonDic["androidOPPOChannelID"] as? String {
-                SettingsConfig.share.pushInfo.androidOPPOChannelID = value
-            }
-            
-            if let value = jsonDic["androidFCMChannelID"] as? String {
-                SettingsConfig.share.pushInfo.androidFCMChannelID = value
-            }
-            
-            if let value = jsonDic["title"] as? String {
-                SettingsConfig.share.pushInfo.title = value
-            }
-            
-            if let value = jsonDic["androidVIVOClassification"] as? Int {
-                SettingsConfig.share.pushInfo.androidVIVOClassification = value
-            }
-            
-            if let value = jsonDic["androidHuaWeiCategory"] as? String {
-                SettingsConfig.share.pushInfo.androidHuaWeiCategory = value
-            }
-        }
-    }
-    
 }

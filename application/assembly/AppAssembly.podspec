@@ -20,10 +20,10 @@ Pod::Spec.new do |spec|
   spec.dependency 'Alamofire'
   spec.dependency 'SnapKit'
   spec.dependency 'AtomicX'
-  spec.dependency 'AtomicXCore'
+  spec.dependency 'AtomicXCore-Preview'
 
   # live
-  spec.dependency 'TUILiveKit' # live
+  # pec.dependency 'TUILiveKit' # live
 
   # call
   spec.dependency 'TUICallKit_Swift' # call
@@ -32,7 +32,7 @@ Pod::Spec.new do |spec|
   spec.dependency 'Toast-Swift' # call
 
   # room
-  spec.dependency 'TUIRoomKit' # room
+  # spec.dependency 'TUIRoomKit' # room
 
   spec.default_subspecs = 'OpenSource'
 
@@ -47,6 +47,14 @@ Pod::Spec.new do |spec|
       'Modules/Interface/**/*.{swift,h,m}',
       'Modules/AtomicXCoreLogin.swift',
       *modules.map { |m| "Modules/#{m}/**/*.{swift,h,m}" },
+    ]
+    ss.exclude_files = [
+      'Live/**/*.{swift,h,m}',
+      'Room/**/*.{swift,h,m}',
+      'VoiceRoom/**/*.{swift,h,m}',
+      'Modules/Live/**/*.{swift,h,m}',
+      'Modules/Room/**/*.{swift,h,m}',
+      'Modules/VoiceRoom/**/*.{swift,h,m}',
     ]
     ss.resource_bundles = {
       'AppAssemblyBundle' => modules.map { |m| "Modules/#{m}/**/*.{xcassets,xcstrings,json}" },

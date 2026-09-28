@@ -34,7 +34,7 @@ class ProfileController: UIViewController {
         table.showsVerticalScrollIndicator = false
         table.separatorColor = .clear
         table.register(ProfileTableViewCell.self,
-                       forCellReuseIdentifier: ProfileTableViewCell.cellReuseIdentifier)
+                       forCellReuseIdentifier: ProfileTableViewCell.cellIdentifier)
         return table
     }()
     
@@ -75,7 +75,7 @@ extension ProfileController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let reuseID = ProfileTableViewCell.cellReuseIdentifier
+        let reuseID = ProfileTableViewCell.cellIdentifier
         let rowData = profileData[indexPath.section]
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseID, for: indexPath) as! ProfileTableViewCell
         cell.selectionStyle = .none

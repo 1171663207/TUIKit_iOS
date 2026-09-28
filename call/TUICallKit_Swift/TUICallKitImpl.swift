@@ -18,9 +18,6 @@ import TXLiteAVSDK_TRTC
 import TXLiteAVSDK_Professional
 #endif
 
-// TODO: 移除 RTCRoomEngine 的依赖
-import RTCRoomEngine
-
 class TUICallKitImpl: TUICallKit {
     static let shared = TUICallKitImpl()
     private var cancellables = Set<AnyCancellable>()
@@ -192,19 +189,20 @@ class TUICallKitImpl: TUICallKit {
     }
     
     override func callExperimentalAPI(jsonStr: String) {
-        // TODO: 替换为 CallStore 的方法
-        TUICallEngine.createInstance().callExperimentalAPI(jsonObject: jsonStr)
+        CallStore.shared.callExperimentalAPI(jsonStr: jsonStr)
     }
     
     func enableMultiDeviceAbility(enable: Bool, completion: CompletionClosure?) {
         globalState.enableMultiDeviceAbility = enable
-        // TODO: 替换为 CallStore 的方法
-        TUICallEngine.createInstance().enableMultiDeviceAbility(enable: enable) {
-            completion?(.success(()))
-        } fail: { code, message in
-            Logger.info("TUICallKitImpl enableMultiDeviceAbility failed.  code: \(code), message: \(message)")
-            completion?(.failure(ErrorInfo(code: Int(code), message: message ?? "")))
+        let jsonParams: [String: Any] = ["api": "enableMultiDeviceAbility",
+                                         "params": ["enableMultiDeviceAbility": enable]]
+        guard let data = try? JSONSerialization.data(withJSONObject: jsonParams),
+              let jsonStr = String(data: data, encoding: .utf8) else {
+            completion?(.failure(ErrorInfo(code: -1, message: "Failed to serialize JSON")))
+            return
         }
+        CallStore.shared.callExperimentalAPI(jsonStr: jsonStr)
+        completion?(.success(()))
     }
 }
 
@@ -327,11 +325,6 @@ extension TUICallKitImpl {
     
     @objc func setupCallEngine() {
         LoginStore.shared.login(sdkAppID: TUILogin.getSdkAppID(), userID: TUILogin.getUserID() ?? "", userSig: TUILogin.getUserSig() ?? "", completion: nil)
-        TUICallEngine.createInstance().`init`(TUILogin.getSdkAppID(), userId: TUILogin.getUserID() ?? "", userSig: TUILogin.getUserSig() ?? "") { [weak self] in
-            guard let self = self else { return }
-        } fail: { code, message in
-            Logger.error("TUICallKitImpl initEngine failed. code: \(code), message: \(message ?? "")")
-        }
     }
     
     @objc func loginSuccess() {
@@ -341,7 +334,6 @@ extension TUICallKitImpl {
     
     @objc func logoutSuccess() {
         CallManager.shared.hangup(completion: nil)
-        TUICallEngine.destroyInstance()
     }
     
     @objc func applicationWillTerminate() {
@@ -377,8 +369,7 @@ extension TUICallKitImpl {
             return
         }
         
-        //TODO: 替换为 CallStore 中的方法
-        TUICallEngine.createInstance().callExperimentalAPI(jsonObject: paramsString)
+        CallStore.shared.callExperimentalAPI(jsonStr: paramsString)
     }
     
     private func setEnableVirtualBackgroundFramework(_ enableVirtualBackground: Bool) {
@@ -406,8 +397,7 @@ extension TUICallKitImpl {
             return
         }
         
-        //TODO: 替换为 CallStore 中的方法
-        TUICallEngine.createInstance().getTRTCCloudInstance().callExperimentalAPI(paramsString)
+        TRTCCloud.sharedInstance().callExperimentalAPI(paramsString)
     }
     
     private func setFramework() {
@@ -432,8 +422,7 @@ extension TUICallKitImpl {
             return
         }
         
-        //TODO: 替换为 CallStore 中的方法
-        TUICallEngine.createInstance().callExperimentalAPI(jsonObject: paramsString)
+        CallStore.shared.callExperimentalAPI(jsonStr: paramsString)
     }
 }
 

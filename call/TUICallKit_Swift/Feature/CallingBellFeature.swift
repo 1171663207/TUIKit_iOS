@@ -7,7 +7,6 @@
 
 import Foundation
 import AVFAudio
-import RTCRoomEngine
 import AtomicX
 import Combine
 import AtomicXCore
@@ -122,13 +121,13 @@ class CallingBellFeature: NSObject, AVAudioPlayerDelegate {
         param.isShortFile = true
         param.path = path
         
-        let audioEffectManager = TUICallEngine.createInstance().getTRTCCloudInstance().getAudioEffectManager()
+        let audioEffectManager = TRTCCloud.sharedInstance().getAudioEffectManager()
         audioEffectManager.startPlayMusic(param, onStart: nil, onProgress: nil)
         audioEffectManager.setMusicPlayoutVolume(id, volume: 100)
     }
     
     private func stopPlayMusicByTRTCPlayer(id: Int32) {
-        let audioEffectManager = TUICallEngine.createInstance().getTRTCCloudInstance().getAudioEffectManager()
+        let audioEffectManager = TRTCCloud.sharedInstance().getAudioEffectManager()
         audioEffectManager.stopPlayMusic(id)
     }
     
@@ -180,7 +179,7 @@ class CallingBellFeature: NSObject, AVAudioPlayerDelegate {
     private func setAudioSessionWith(category: AVAudioSession.Category) {
         let audioSession = AVAudioSession.sharedInstance()
         do {
-            try audioSession.setCategory(category, options: [.allowBluetooth, .allowBluetoothA2DP])
+            try audioSession.setCategory(category, options: [.allowBluetoothHFP, .allowBluetoothA2DP])
             try audioSession.setActive(true)
         } catch {
             Logger.error("Error setting up audio session: \(error)")

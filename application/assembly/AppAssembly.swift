@@ -63,6 +63,11 @@ public final class AppAssembly {
 
     // MARK: - Public API
 
+    /// 当前工程只跑通 Call 场景，其余模块暂时注释保留。
+    ///
+    /// 重新启用某个模块时，记得同步放开 `AppAssembly.podspec` 中对应的
+    /// `exclude_files` 与 TUIXXXKit 依赖（Room / Live / VoiceRoom），
+    /// 或补齐缺失的模块源码（Chat / AIConversation / Interpretation / Beauty / Player / UGSV）。
     public func allModuleProviders(target: AppTarget) -> [ModuleProvider] {
         var providers: [ModuleProvider] = []
 
@@ -70,30 +75,30 @@ public final class AppAssembly {
         case .overseas:
             providers.append(CallModule.standard(target: target))
             #if APPASSEMBLY_FULL
-            providers.append(AIConversationModule.standard)
-            providers.append(InterpretationModule.standard)
+            // providers.append(AIConversationModule.standard)
+            // providers.append(InterpretationModule.standard)
             #endif
-            providers.append(RoomModule.standard)
-            providers.append(LiveModule.standard(target: target))
+            // providers.append(RoomModule.standard)
+            // providers.append(LiveModule.standard(target: target))
             #if APPASSEMBLY_FULL
-            providers.append(ChatModule.standard)
-            providers.append(BeautyModule.standard)
-            providers.append(PlayerModule.standard)
+            // providers.append(ChatModule.standard)
+            // providers.append(BeautyModule.standard)
+            // providers.append(PlayerModule.standard)
             #endif
         case .domestic, .lab:
             providers.append(CallModule.standard(target: target))
-            providers.append(LiveModule.standard(target: target))
-            providers.append(RoomModule.standard)
+            // providers.append(LiveModule.standard(target: target))
+            // providers.append(RoomModule.standard)
             #if APPASSEMBLY_FULL
-            providers.append(ChatModule.standard)
-            providers.append(AIConversationModule.standard)
-            providers.append(InterpretationModule.standard)
+            // providers.append(ChatModule.standard)
+            // providers.append(AIConversationModule.standard)
+            // providers.append(InterpretationModule.standard)
             #endif
-            providers.append(VoiceRoomModule.standard)
+            // providers.append(VoiceRoomModule.standard)
             #if APPASSEMBLY_FULL
-            providers.append(BeautyModule.standard)
-            providers.append(PlayerModule.standard)
-            providers.append(UGSVModule.standard)
+            // providers.append(BeautyModule.standard)
+            // providers.append(PlayerModule.standard)
+            // providers.append(UGSVModule.standard)
             #endif
             providers.append(ScenesApplicationModule.standard)
         }

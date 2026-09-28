@@ -16,12 +16,11 @@ Pod::Spec.new do |s|
   s.swift_version    = '5.0'
   s.frameworks       = 'UIKit', 'Foundation'
 
-  s.dependency 'RTCRoomEngine/Professional'
   s.dependency 'SnapKit'
   s.dependency 'TXLiteAVSDK_Professional'
   s.dependency 'TUICore'
   s.dependency 'Kingfisher'
-  s.dependency 'AtomicXCore' 
+  s.dependency 'AtomicXCore-Preview'
   s.dependency 'TXIMSDK_Plus_iOS_XCFramework', '>= 8.8.7357'
   
   s.static_framework = true
